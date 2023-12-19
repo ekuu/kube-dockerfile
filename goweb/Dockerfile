@@ -4,11 +4,11 @@ ADD . .
 
 RUN CGO_ENABLED=0 go build -o /bin/webtest main.go
 
-FROM alpine:3.18 as runtime
+FROM alpine:3.18
 
 ENV TZ=Asia/Shanghai
 
-COPY --from=build /bin/webtest /bin/
+COPY --from=builder /bin/webtest /bin/
 
 RUN set -x && \
     sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
